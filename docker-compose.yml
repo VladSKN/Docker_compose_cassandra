@@ -1,0 +1,64 @@
+version: '3.5'
+    
+services:
+  cassandra_1:
+    networks:
+        app_net:
+            ipv4_address: 172.30.0.2
+    container_name: cassandra_1
+    image: bitnami/cassandra:latest
+    restart: always
+    ports:
+      - 9042:9042
+    volumes:
+      - /home/vlad-ubuntu/Documents/cassandra/node1:/var/lib/cassandra/data
+    environment:
+      - "CASSANDRA_START_RPC=true"
+      - "CASSANDRA_CLUSTER_NAME=Cassandra_Cluster"
+      - "ASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+      - "CASSANDRA_DC=datacenter1"
+      - "CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3"
+
+
+  cassandra_2:
+    networks:
+        app_net:
+            ipv4_address: 172.30.0.3
+    container_name: cassandra_2
+    image: bitnami/cassandra:latest
+    restart: always
+    ports:
+      - 9043:9042
+    volumes:
+      - /home/vlad-ubuntu/Documents/cassandra/node2:/var/lib/cassandra/data
+    environment:
+      - "CASSANDRA_START_RPC=true"
+      - "CASSANDRA_CLUSTER_NAME=Cassandra_Cluster"
+      - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+      - "CASSANDRA_DC=datacenter1"
+      - "CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3"
+ 
+
+  cassandra_3:
+    networks:
+        app_net:
+            ipv4_address: 172.30.0.4
+    container_name: cassandra_3
+    image: bitnami/cassandra:latest
+    restart: always
+    ports:
+      - 9044:9042
+    volumes:
+      - /home/vlad-ubuntu/Documents/cassandra/node3:/var/lib/cassandra/data
+    environment:
+      - "CASSANDRA_START_RPC=true"
+      - "CASSANDRA_CLUSTER_NAME=Cassandra_Cluster"
+      - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+      - "CASSANDRA_DC=datacenter1"
+      - "CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3"
+networks:
+    app_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.30.0.0/16
