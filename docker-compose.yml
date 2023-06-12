@@ -4,7 +4,7 @@ services:
   cassandra_1:
     networks:
         app_net:
-            ipv4_address: 172.30.0.2
+            ipv4_address: 192.168.1.40
     container_name: cassandra_1
     image: bitnami/cassandra:latest
     restart: always
@@ -18,12 +18,13 @@ services:
       - "ASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
       - "CASSANDRA_DC=datacenter1"
       - "CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3"
-
+      - "CASSANDRA_LISTEN_ADDRESS=192.168.1.40"
+      - "CASSANDRA_BROADCAST_ADDRESS=192.168.1.40"
 
   cassandra_2:
     networks:
         app_net:
-            ipv4_address: 172.30.0.3
+            ipv4_address: 192.168.1.41
     container_name: cassandra_2
     image: bitnami/cassandra:latest
     restart: always
@@ -37,12 +38,14 @@ services:
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
       - "CASSANDRA_DC=datacenter1"
       - "CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3"
+      - "CASSANDRA_LISTEN_ADDRESS=192.168.1.41"
+      - "CASSANDRA_BROADCAST_ADDRESS=192.168.1.41"
  
 
   cassandra_3:
     networks:
         app_net:
-            ipv4_address: 172.30.0.4
+            ipv4_address: 192.168.1.42
     container_name: cassandra_3
     image: bitnami/cassandra:latest
     restart: always
@@ -56,9 +59,11 @@ services:
       - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
       - "CASSANDRA_DC=datacenter1"
       - "CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3"
+      - "CASSANDRA_LISTEN_ADDRESS=192.168.1.42"
+      - "CASSANDRA_BROADCAST_ADDRESS=192.168.1.42"
 networks:
     app_net:
         ipam:
             driver: default
             config:
-                - subnet: 172.30.0.0/16
+                - subnet: 192.168.1.0/24
