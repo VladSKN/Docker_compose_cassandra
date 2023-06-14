@@ -3,72 +3,65 @@ version: '3.5'
 services:
   cassandra_1:
     networks:
-        demo-macvlan-net-vlad:
+        app_net:
             ipv4_address: 192.168.2.40
     container_name: cassandra_1
-    image: bitnami/cassandra:latest
+    image: cassandra:latest
     restart: always
     ports:
       - 9042:9042
     volumes:
-      - /home/vlad-ubuntu/Documents/cassandra/node1:/var/lib/cassandra/data
+      - /home/vlad-ubuntu/Documents/docker/cassandra/node1:/var/lib/cassandra/data
     environment:
-      - "CASSANDRA_START_RPC=true"
-      - "CASSANDRA_CLUSTER_NAME=Cassandra_Cluster"
-      - "ASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
-      - "CASSANDRA_DC=datacenter1"
-      - "CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3"
-      - "CASSANDRA_LISTEN_ADDRESS=192.168.2.40"
-      - "CASSANDRA_BROADCAST_ADDRESS=192.168.2.40"
+      - CASSANDRA_START_RPC=true
+      - CASSANDRA_CLUSTER_NAME=Cassandra_Cluster
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=dc1
+      - CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3
 
   cassandra_2:
     networks:
-        demo-macvlan-net-vlad:
+        app_net:
             ipv4_address: 192.168.2.41
     container_name: cassandra_2
-    image: bitnami/cassandra:latest
+    image: cassandra:latest
     restart: always
     ports:
       - 9043:9042
     volumes:
-      - /home/vlad-ubuntu/Documents/cassandra/node2:/var/lib/cassandra/data
+      - /home/vlad-ubuntu/Documents/docker/cassandra/node2:/var/lib/cassandra/data
     environment:
-      - "CASSANDRA_START_RPC=true"
-      - "CASSANDRA_CLUSTER_NAME=Cassandra_Cluster"
-      - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
-      - "CASSANDRA_DC=datacenter1"
-      - "CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3"
-      - "CASSANDRA_LISTEN_ADDRESS=192.168.2.41"
-      - "CASSANDRA_BROADCAST_ADDRESS=192.168.2.41"
+      - CASSANDRA_START_RPC=true
+      - CASSANDRA_CLUSTER_NAME=Cassandra_Cluster
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=dc1
+      - CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3
  
 
   cassandra_3:
     networks:
-        demo-macvlan-net-vlad:
+        app_net:
             ipv4_address: 192.168.2.42
     container_name: cassandra_3
-    image: bitnami/cassandra:latest
+    image: cassandra:latest
     restart: always
     ports:
       - 9044:9042
     volumes:
-      - /home/vlad-ubuntu/Documents/cassandra/node3:/var/lib/cassandra/data
+      - /home/vlad-ubuntu/Documents/docker/cassandra/node3:/var/lib/cassandra/data
     environment:
-      - "CASSANDRA_START_RPC=true"
-      - "CASSANDRA_CLUSTER_NAME=Cassandra_Cluster"
-      - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
-      - "CASSANDRA_DC=datacenter1"
-      - "CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3"
-      - "CASSANDRA_LISTEN_ADDRESS=192.168.2.42"
-      - "CASSANDRA_BROADCAST_ADDRESS=192.168.2.42"
+      - CASSANDRA_START_RPC=true
+      - CASSANDRA_CLUSTER_NAME=Cassandra_Cluster
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=dc1
+      - CASSANDRA_SEEDS=cassandra_1,cassandra_2,cassandra_3
 
 networks:
-  demo-macvlan-net-vlad:
+  app_net:
     driver: macvlan
     driver_opts:
-      parent: enp4s0
+      parent: wlo1
     ipam:
       config:
-        - subnet: "192.168.2.0/24"
-          ip_range: "192.168.2.50/26"
-          gateway: "192.168.2.1"
+        - subnet: 192.168.2.0/24
+          gateway: 192.168.2.1
